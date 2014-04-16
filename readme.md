@@ -4,6 +4,7 @@ A Perl script to find all words in a dictionary containing specified letters.
 <h2>Usage</h2>
 Create an instance of WordsPlease that points to your dictionary directory.
 ```perl
+use WordsPlease;
 my $wordsPlease = new WordsPlease("dictionaries");
 ```
 
