@@ -8,12 +8,19 @@ print "Content-Type: text/html; charset=iso-8859-1\n\n";
 
 
 my $input = new CGI;
-my $letters = CGI::escapeHTML($input->param("letters")) || "abcde";
+my $letters = lc(CGI::escapeHTML($input->param("letters")));
+my $default = "srerettulfekip";
+my $limit = 1000;
 my $dir = CGI::escapeHTML($input->param("dir")) || "words";
-my $new = CGI::escapeHTML($input->param("new"));
-my $exclusive = CGI::escapeHTML($input->param("exclusive")) || !$new;
-my $wordsPlease = new WordsPlease($dir);
-my @matchedWords = sort($wordsPlease->wordsWith($letters, $exclusive));
+my $exclusive = CGI::escapeHTML($input->param("exclusive"));
+my $occurrences = CGI::escapeHTML($input->param("occurrences"));
+my $wordsPlease = new WordsPlease($dir, $limit);
+my @matchedWords = ();
+if ($letters) {
+	@matchedWords = sort { length $b <=> length $a } $wordsPlease->wordsWith($letters, $exclusive, $occurrences);
+} else {
+	@matchedWords = sort { length $b <=> length $a } $wordsPlease->wordsWith($default, 1, 1);
+}
 
 say '<html>';
 say '<head>';
@@ -23,28 +30,46 @@ say "<link rel='stylesheet' type='text/css' href='style.css' />";
 say '<title>Words Please</title>';
 say '</head>';
 say '<body>';
+say '<div id="header">';
 say '<h1>Words Please</h1>';
 say "<form action='' method='get'>";
-say "<label>Letters in word: </label><input type='text' name='letters' value='$letters' /><br />";
-print "<label>Only using these letters: <input type='checkbox' name='exclusive' id='exclusive' value='true'";
-if ($exclusive) {
+print "<label>Letters in word: </label><input type='text' name='letters' value='";
+if ($letters) {
+	print $letters;
+} else {
+	print $default;
+}
+print "' /><div class='break'></div>\n";
+print "<label>Only using these letters: </label><input type='checkbox' name='exclusive' id='exclusive' value='true'";
+if ($exclusive || !$letters) {
 	print " checked ";
 }
-print "/><label for='exclusive' class='checkbox'></label><br />\n";
-say "<input type='hidden' name='new' value='false' />";
+print "/><label for='exclusive' class='checkbox'></label><div class='break'></div>\n";
+print "<label>Only as many of each letter as specified: </label><input type='checkbox' name='occurrences' id='occurrences' value='true'";
+if ($occurrences || !$letters) {
+	print " checked ";
+}
+print "/><label for='occurrences' class='checkbox'></label><div class='break'></div>\n";
 say "<input type='submit' value='Search' />";
 say '</form>';
+say '</div>';
 
-say "<h2>Words That Match</h2>";
+say "<h2>Matched Words</h2>";
+say "<div id='content'>";
 if (scalar @matchedWords > 0) {
-	say "<ul>";
 	foreach my $word (@matchedWords) {
-		say "<li>$word</li>";
+		say "<div class='word'>$word</div>";
 	}
-	say "</ul>";
+	if (scalar @matchedWords > $limit) {
+		say "<p>To reduce server load, only 1000 words are displayed.</p>";
+	}
 } else {
-	say "<p>No matches found.</p>";
+	say "<div class='word'>No matches found.</div>";
 }
-
+say "</div>";
+say "<div id='footer'>";
+say "<p>A project by <a href='http://www.pahgawks.com'>Dave Pagurek</a>, 2014.</p>";
+say "<a class='github' href='https://github.com/pahgawk/WordsPlease/'>View source on GitHub</a>";
+say "</div>";
 say '</body>';
 say '</html>';

@@ -1,39 +1,52 @@
 body {
 	font-family:sans-serif;
-	color: #FFF;
 	margin: 0;
-	padding: 20px;
-	background-color: #99C938;
-}
-a, a:active, a:visited {
-	color:#FFF;
-}
-a:hover {
-	color:#000;
+	padding: 0;
+	background-color: #62A7C4;
 }
 h1, h2, h3 {
 	font-family: 'Bitter', serif;
 }
 h1 {
-	font-size: 40px;
+	font-size: 50px;
 	font-weight: bold;
 	margin-top:0;
+	text-align:center;
 }
 h1 a {
 	text-decoration:none;
 }
 h2 {
-	font-size:20px;
+	font-size:30px;
 	font-weight:normal;
-	margin-right:10px;
+	margin-bottom:0;
+	margin-top:40px;
+	text-align:center;
+	color:#FFF;
 }
-h3 {
-	font-size:40px;
-	font-weight:normal;
+a, a:active, a:visited {
+	color:#2178A3;
+}
+a:hover {
+	color:#62A7C4;
+}
+form {
+	display:block;
+	margin:20px auto;
+	max-width:400px;
+	padding:20px;
+	color:#FFF;
+	background-color:#62A7C4;
+}
+label {
+	display:inline-block;
+	width:150px;
+	margin-right:20px;
+	vertical-align:middle;
 }
 input[type="text"] {
-	display:block;
-  	width: 290px;
+	display:inline-block;
+  	width: 230px;
   	padding: 10px;
   	font-size: inherit;
   	font-family: sans-serif;
@@ -45,7 +58,9 @@ input[type="submit"], input[type="button"], a.button {
 	padding:5px;
 	border: 5px solid #FFF;
 	text-decoration:none;
-	display:inline-block;
+	display:block;
+	font-size:inherit;
+	margin:10px auto;
 }
 input[type="submit"]:hover, input[type="button"]:hover, a.button:hover {
 	border: 5px solid #DDD;
@@ -69,5 +84,75 @@ input[type="checkbox"] {
   vertical-align:middle;
 }
 input[type="checkbox"]:checked + .checkbox {
-  background-color:#6E9918;
+  background-color:#2178A3;
+}
+.break {
+	height:10px;
+}
+#header {
+	padding:40px;
+	background-color:#FFF;
+	color:#000;
+}
+#content {
+	padding:20px;
+	max-width:1000px;
+	margin:10px auto;
+	text-align:center;
+	color:#FFF;
+}
+#content p {
+	font-style: italic;
+}
+.word {
+	display:inline-block;
+	padding:12px;
+	margin:7px;
+	background:#FFF;
+	background:rgba(255,255,255,0.5);
+	color: #000;
+}
+input[type="submit"] {
+	width:200px;
+	height:50px;
+}
+#footer {
+	padding:40px;
+	background-color:#FFF;
+	color:#000;
+	text-align:center;
+	font-size:17px;
+}
+a.github {
+	background-color:#62A7C4;
+	display:block;
+	padding:15px;
+	margin:15px auto;
+	width:200px;
+	color:#FFF;
+	text-decoration:none;
+}
+a.github:hover {
+	background-color:#2178A3;
+	color:#FFF;
+}
+
+@media all and (max-width: 600px) {
+	h1 {
+		font-size:30px;
+	}
+	form {
+		margin:10px auto;
+	}
+	input[type="text"] {
+		width:100%;
+	}
+	label {
+		display:block;
+		width:auto;
+	}
+	input[type="submit"] {
+		width:auto;
+		height:auto;
+	}
 }
