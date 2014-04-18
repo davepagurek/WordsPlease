@@ -35,7 +35,7 @@ sub wordsWith {
 				$word = $_;
 
 				#remove whitespace
-				$word =~ s/^\s+|\s+$//g;
+				$word =~ s/^\s+|\s+$//go;
 
 				#Ignore words that need apostrophes or ones that are already in the hash
 				if ($word =~ /'/ || exists $words{$word}) {
@@ -44,7 +44,7 @@ sub wordsWith {
 
 				#Use the exlusive pattern if given letters are used exclusively
 				if ($exclusive) {
-					if ($word =~ /$lettersExpExcl/) {
+					if ($word =~ /$lettersExpExcl/o) {
 
 						#If letters can only be used as many times as they appear
 						if ($occurrences) {
@@ -84,7 +84,7 @@ sub wordsWith {
 					}
 
 				#If the letters given don't have to be the only ones in the word
-				} elsif ($word =~ /$lettersExp/) {
+				} elsif ($word =~ /$lettersExp/o) {
 					$words{$word}=1;
 				}
 			}
