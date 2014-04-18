@@ -20,7 +20,7 @@ my $limit = 500;
 my $dir = "words";
 my $exclusive = CGI::escapeHTML($input->param("exclusive"));
 my $occurrences = CGI::escapeHTML($input->param("occurrences"));
-my $wordsPlease = new WordsPlease($dir, $limit);
+my $wordsPlease = new WordsPlease($dir, $limit, 3);
 my @matchedWords = ();
 if ($letters) {
 	@matchedWords = sort { length $b <=> length $a } $wordsPlease->wordsWith($letters, $exclusive, $occurrences);

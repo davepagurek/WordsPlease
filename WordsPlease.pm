@@ -4,7 +4,8 @@ sub new {
 	my $class = shift;
 	my $self = {
 		dir => shift,
-		limit => shift,
+		wordLimit => shift,
+		timeLimit => shift,
 	};
 	bless $self, $class;
 	return $self;
@@ -13,6 +14,7 @@ sub new {
 sub wordsWith {
 	my ($self, $letters, $exclusive, $occurrences) = @_;
 	my %words;
+	my $startTime = time;
 	if ($self->{dir} && $letters) {
 
 		#Pattern where only the letters given can be used
@@ -28,8 +30,8 @@ sub wordsWith {
 
 			while (<$dictionary>) {
 
-				#If the word limit exists and has been passed, end the loop
-				if ($self->{limit} && scalar values %words >= $self->{limit}) {
+				#If the word limit exists and has been passed or a time limit exists and has been passed, end the loop
+				if (($self->{timeLimit} && time - $startTime >= $self->{wordLimit}) || ($self->{wordLimit} && scalar values %words >= $self->{wordLimit})) {
 					last DICTIONARIES;
 				}
 				$word = $_;
@@ -44,7 +46,7 @@ sub wordsWith {
 
 				#Use the exlusive pattern if given letters are used exclusively
 				if ($exclusive) {
-					if ($word =~ /$lettersExpExcl/o) {
+					if ($word =~ /$lettersExpExcl/io) {
 
 						#If letters can only be used as many times as they appear
 						if ($occurrences) {
@@ -84,7 +86,7 @@ sub wordsWith {
 					}
 
 				#If the letters given don't have to be the only ones in the word
-				} elsif ($word =~ /$lettersExp/o) {
+				} elsif ($word =~ /$lettersExp/io) {
 					$words{$word}=1;
 				}
 			}
