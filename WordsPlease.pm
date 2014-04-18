@@ -12,7 +12,7 @@ sub new {
 
 sub wordsWith {
 	my ($self, $letters, $exclusive, $occurrences) = @_;
-	my @words = ();
+	my %words;
 	if ($self->{dir} && $letters) {
 
 		#Pattern where only the letters given can be used
@@ -22,21 +22,23 @@ sub wordsWith {
 		my $lettersExp = "([$letters]+)";
 
 		#Look through all files in the dictionary directory
+		DICTIONARIES:
 		foreach my $dictionaryFile (glob("$self->{dir}/*")) {
 			open my $dictionary, "<", $dictionaryFile or die "Can't read open '$dictionaryFile': $OS_ERROR";
+
 			while (<$dictionary>) {
 
 				#If the word limit exists and has been passed, end the loop
-				if ($self->{limit} && scalar @words >= $self->{limit}) {
-					last;
+				if ($self->{limit} && scalar values %words >= $self->{limit}) {
+					last DICTIONARIES;
 				}
 				$word = $_;
 
 				#remove whitespace
 				$word =~ s/^\s+|\s+$//g;
 
-				#Ignore words that need apostrophes
-				if ($word =~ /'/) {
+				#Ignore words that need apostrophes or ones that are already in the hash
+				if ($word =~ /'/ || exists $words{$word}) {
 					next;
 				}
 
@@ -72,24 +74,26 @@ sub wordsWith {
 
 							#If the word fits, add it
 							if ($good == 1) {
-								push(@words, $word);
+								$words{$word}=1;
 							}
 
 						#If it's not exclusive, since the pattern already matched, add the word
 						} else {
-							push(@words, $word);
+							$words{$word}=1;
 						}
 					}
 
 				#If the letters given don't have to be the only ones in the word
 				} elsif ($word =~ /$lettersExp/) {
-					push(@words, $word);
+					$words{$word}=1;
 				}
 			}
-			close $dictionary or die "can't read close '$dictonary': $OS_ERROR";
+			close $dictionary or die "can't read close '$dictionary': $OS_ERROR";
 		}
 	}
-	return @words;
+
+	#return array of words
+	return keys %words;
 }
 
 1;

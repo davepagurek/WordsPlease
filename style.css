@@ -2,27 +2,31 @@ body {
 	font-family:sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: #62A7C4;
+	background-color: #FFF;
 }
-h1, h2, h3 {
+h1, h2 {
 	font-family: 'Bitter', serif;
 }
 h1 {
 	font-size: 50px;
 	font-weight: bold;
 	margin-top:0;
+	margin-bottom:5px;
 	text-align:center;
-}
-h1 a {
-	text-decoration:none;
 }
 h2 {
 	font-size:30px;
 	font-weight:normal;
 	margin-bottom:0;
-	margin-top:40px;
+	margin-top:0;
+	padding-top:40px;
 	text-align:center;
 	color:#FFF;
+}
+h3 {
+	font-weight:normal;
+	text-align:center;
+	margin:0 0 40px 0;
 }
 a, a:active, a:visited {
 	color:#2178A3;
@@ -94,10 +98,13 @@ input[type="checkbox"]:checked + .checkbox {
 	background-color:#FFF;
 	color:#000;
 }
+#words {
+	background-color: #62A7C4;
+}
 #content {
-	padding:20px;
+	padding:20px 0 30px 0;
 	max-width:1000px;
-	margin:10px auto;
+	margin:0 auto;
 	text-align:center;
 	color:#FFF;
 }
@@ -148,8 +155,7 @@ a.github:hover {
 		width:100%;
 	}
 	label {
-		display:block;
-		width:auto;
+		width:75%;
 	}
 	input[type="submit"] {
 		width:auto;

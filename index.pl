@@ -1,5 +1,7 @@
 #!C:/xampp2/perl/bin/perl.exe
 
+#This is an example usage of the WordsPlease package.
+
 use CGI;
 use WordsPlease;
 
@@ -9,9 +11,12 @@ print "Content-Type: text/html; charset=iso-8859-1\n\n";
 
 
 my $input = new CGI;
-my $letters = lc(CGI::escapeHTML($input->param("letters")));
+my $letters = 0;
+if (CGI::escapeHTML($input->param("letters"))) {
+	$letters = lc(CGI::escapeHTML($input->param("letters")));
+}
 my $default = "srerettulfekip";
-my $limit = 1000;
+my $limit = 500;
 my $dir = "words";
 my $exclusive = CGI::escapeHTML($input->param("exclusive"));
 my $occurrences = CGI::escapeHTML($input->param("occurrences"));
@@ -28,11 +33,12 @@ say '<head>';
 say "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
 say "<link href='http://fonts.googleapis.com/css?family=Bitter:400' rel='stylesheet' type='text/css'>";
 say "<link rel='stylesheet' type='text/css' href='style.css' />";
-say '<title>Words Please</title>';
+say '<title>Words, Please</title>';
 say '</head>';
 say '<body>';
 say '<div id="header">';
 say '<h1>Words, Please</h1>';
+say '<h3>Find all the words that can be made with a set of letters.</h3>';
 say "<form action='' method='get'>";
 print "<label>Letters in word: </label><input type='text' name='letters' value='";
 if ($letters) {
@@ -55,6 +61,7 @@ say "<input type='submit' value='Search' />";
 say '</form>';
 say '</div>';
 
+say "<div id='words'>";
 say "<h2>Matched Words</h2>";
 say "<div id='content'>";
 if (scalar @matchedWords > 0) {
@@ -62,12 +69,12 @@ if (scalar @matchedWords > 0) {
 		say "<div class='word'>$word</div>";
 	}
 	if (scalar @matchedWords > $limit) {
-		say "<p>To reduce server load, only 1000 words are displayed.</p>";
+		say "<p>To reduce server load, only $limit words are displayed.</p>";
 	}
 } else {
 	say "<div class='word'>No matches found.</div>";
 }
-say "</div>";
+say "</div></div>";
 say "<div id='footer'>";
 say "<p>A project by <a href='http://www.pahgawks.com'>Dave Pagurek</a>, 2014.</p>";
 say "<a class='github' href='https://github.com/pahgawk/WordsPlease/'>View source on GitHub</a>";
