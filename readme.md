@@ -9,6 +9,8 @@ use WordsPlease;
 my $wordsPlease = new WordsPlease("dictionaries", 1000);
 ```
 
+Word list text files can be downloaded online from your source of choice. The live demo uses the <a href="http://www-01.sil.org/linguistics/wordlists/english/">SIL International list.</a>
+
 Get an array of matched words.
 Parameters:
 <ol>
