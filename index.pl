@@ -1,8 +1,9 @@
 #!C:/xampp2/perl/bin/perl.exe
 
 use CGI;
-use v5.10;
 use WordsPlease;
+
+sub say { print @_, "\n" } #Support for Perl < 5.10
 
 print "Content-Type: text/html; charset=iso-8859-1\n\n";
 
@@ -11,7 +12,7 @@ my $input = new CGI;
 my $letters = lc(CGI::escapeHTML($input->param("letters")));
 my $default = "srerettulfekip";
 my $limit = 1000;
-my $dir = CGI::escapeHTML($input->param("dir")) || "words";
+my $dir = "words";
 my $exclusive = CGI::escapeHTML($input->param("exclusive"));
 my $occurrences = CGI::escapeHTML($input->param("occurrences"));
 my $wordsPlease = new WordsPlease($dir, $limit);
@@ -31,7 +32,7 @@ say '<title>Words Please</title>';
 say '</head>';
 say '<body>';
 say '<div id="header">';
-say '<h1>Words Please</h1>';
+say '<h1>Words, Please</h1>';
 say "<form action='' method='get'>";
 print "<label>Letters in word: </label><input type='text' name='letters' value='";
 if ($letters) {
