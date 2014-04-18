@@ -16,7 +16,7 @@ if (CGI::escapeHTML($input->param("letters"))) {
 	$letters = lc(CGI::escapeHTML($input->param("letters")));
 }
 my $default = "srerettulfekip";
-my $limit = 500;
+my $limit = 800;
 my $dir = "words";
 my $exclusive = CGI::escapeHTML($input->param("exclusive"));
 my $occurrences = CGI::escapeHTML($input->param("occurrences"));
@@ -68,7 +68,7 @@ if (scalar @matchedWords > 0) {
 	foreach my $word (@matchedWords) {
 		say "<div class='word'>$word</div>";
 	}
-	if (scalar @matchedWords > $limit) {
+	if (scalar @matchedWords >= $limit) {
 		say "<p>To reduce server load, only $limit words are displayed.</p>";
 	}
 } else {
