@@ -1,6 +1,6 @@
 <h1>WordsPlease</h1>
 A Perl script to find all words in a dictionary containing specified letters.
-Live demo available at <a href="http://pahgawks.com/wordsplease">http://pahgawks.com/wordsplease</a>
+Live demo available at <a href="http://davepagurek.com/wordsplease">http://davepagurek.com/wordsplease</a>
 
 <h2>Input</h2>
 WordsPlease works with text files with one word per line.
